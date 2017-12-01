@@ -68,12 +68,11 @@ defmodule ExAws.Firehose do
 
   @doc "Puts a record on a stream"
   @spec put_record(stream_name :: stream_name, data :: binary) :: ExAws.Operation.JSON.t
-  def put_record(stream_name, data, opts \\ []) do
-    data = opts
-    |> camelize_keys
-    |> Map.merge(%{
+  def put_record(stream_name, data) do
+    data = %{
       "Record" => format_record(data),
-      "DeliveryStreamName" => stream_name})
+      "DeliveryStreamName" => stream_name
+    }
 
     request(:put_record, data)
   end
